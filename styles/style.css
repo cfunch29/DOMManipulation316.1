@@ -50,8 +50,6 @@ header, #top-menu {
 }
 #sub-menu {
 	width: 100%;
-  position: absolute;
-  top: 0;
 	z-index: 10;
 	transition: top 0.5s ease-out;
 }

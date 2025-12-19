@@ -1,52 +1,84 @@
 // Menu data structure
 var menuLinks = [
-  {text: 'about', href: '/about'},
-  {text: 'catalog', href: '#', subLinks: [
-    {text: 'all', href: '/catalog/all'},
-    {text: 'top selling', href: '/catalog/top'},
-    {text: 'search', href: '/catalog/search'},
-  ]},
-  {text: 'orders', href: '#' , subLinks: [
-    {text: 'new', href: '/orders/new'},
-    {text: 'pending', href: '/orders/pending'},
-    {text: 'history', href: '/orders/history'},
-  ]},
-  {text: 'account', href: '#', subLinks: [
-    {text: 'profile', href: '/account/profile'},
-    {text: 'sign out', href: '/account/signout'},
-  ]},
+  { text: 'about', href: '/about' },
+  {
+    text: 'catalog', href: '#', subLinks: [
+      { text: 'all', href: '/catalog/all' },
+      { text: 'top selling', href: '/catalog/top' },
+      { text: 'search', href: '/catalog/search' },
+    ]
+  },
+  {
+    text: 'orders', href: '#', subLinks: [
+      { text: 'new', href: '/orders/new' },
+      { text: 'pending', href: '/orders/pending' },
+      { text: 'history', href: '/orders/history' },
+    ]
+  },
+  {
+    text: 'account', href: '#', subLinks: [
+      { text: 'profile', href: '/account/profile' },
+      { text: 'sign out', href: '/account/signout' },
+    ]
+  },
 ];
 
-    const mainEl = document.querySelector("main");
-    mainEl.style.backgroundColor = 'var(--main-bg';
-    mainEl.innerHTML= '<h1>DOM Manipulation</h1>';
-    mainEl.classList.add('flex-ctr')
-    
-    const topMenuEl = document.getElementById('top-menu')
-    topMenuEl.style.height = "100%";
-    topMenuEl.style.backgroundColor = "var(--top-menu-bg)";
+const mainEl = document.querySelector("main");
+mainEl.style.backgroundColor = 'var(--main-bg)';
+mainEl.innerHTML = '<h1>DOM Manipulation</h1>';
+mainEl.classList.add('flex-ctr')
 
-    topMenuEl.classList.add("flex-around");
+// top menu
+const topMenuEl = document.getElementById('top-menu')
+topMenuEl.style.height = "100%";
+topMenuEl.style.backgroundColor = "var(--top-menu-bg)";
 
-    console.log(topMenuEl)
+topMenuEl.classList.add("flex-around");
 
-  
-    const subMenuEl = document.getElementById('sub-menu')
-    subMenuEl.style.height = "100%";
-    subMenuEl.style.backgroundColor = "var(--sub-menu-bg)";
+console.log(topMenuEl)
 
-
-    subMenuEl.classList.add("flex-around");
-
-    console.log(subMenuEl)
-
-for (let link of menuLinks){
-    let anchor = document.createElement("a");
-    anchor.setAttribute("href", link.href);
-    anchor.textContent = link.text;
-
-    topMenuEl.appendChild(anchor);
+// menu links
+for (let link of menuLinks) {
+  let anchor = document.createElement("a");
+  anchor.setAttribute("href", link.href);
+  anchor.textContent = link.text;
+  topMenuEl.appendChild(anchor);
 }
 
+// submenu
+const subMenuEl = document.getElementById('sub-menu')
+  subMenuEl.style.height = "100%";
+  subMenuEl.style.backgroundColor = "var(--sub-menu-bg)";
+  subMenuEl.style.position = 'absolute';
+  subMenuEl.style.top = '0';
+  subMenuEl.classList.add("flex-around");
+
+  // console.log(subMenuEl)
+
+  // click top menu links
+const topMenuLinks = document.querySelectorAll("a");
+topMenuEl.addEventListener('click', function handleClick(clickEvent) {
+  clickEvent.preventDefault();
+  //  if clicked element is a link 
+  if (clickEvent.target.tagName !== 'A')
+    return;
+
+   console.log(clickEvent.target.textContent)
+    // add toggle for non-selected links
+    for (const a of topMenuLinks){
+          // toggle
+    if (a !== clickEvent.target) {
+      a.classList.remove('active');
+    }
+  }
+         clickEvent.target.classList.toggle('active');
+
+  topMenuEl.addEventListener('click', handleClick);
+
+});
+console.log(topMenuEl)
+
+console.log(topMenuLinks)
+
 console.log(mainEl)
-console.log(MenuLinks)
+console.log(menuLinks)
