@@ -23,6 +23,7 @@ var menuLinks = [
   },
 ];
 
+// main menu styling
 const mainEl = document.querySelector("main");
 mainEl.style.backgroundColor = 'var(--main-bg)';
 mainEl.innerHTML = '<h1>DOM Manipulation</h1>';
@@ -37,14 +38,6 @@ topMenuEl.classList.add("flex-around");
 
 // console.log(topMenuEl)
 
-// menu links
-for (let link of menuLinks) {
-  let anchor = document.createElement("a");
-  anchor.setAttribute("href", link.href);
-  anchor.textContent = link.text;
-  topMenuEl.appendChild(anchor);
-}
-
 // submenu css styling
 const subMenuEl = document.getElementById('sub-menu');
 subMenuEl.style.height = "100%";
@@ -56,8 +49,29 @@ subMenuEl.classList.add("flex-around");
 
 // console.log(subMenuEl)
 
+// menu links
+for (let link of menuLinks) {
+  let anchor = document.createElement("a");
+  anchor.setAttribute("href", link.href);
+  anchor.textContent = link.text;
+  topMenuEl.appendChild(anchor);
+}
+
+
 // click top menu links
 const topMenuLinks = topMenuEl.querySelectorAll("a");
+
+// clear submenu links
+function buildSubmenu(subLinks) {
+  subMenuEl.innerHTML = '';
+  for (let subLink of subLinks) {
+    let subAnchor = document.createElement('a');
+    subAnchor.setAttribute('href', subLink.href);
+    subAnchor.textContent = subLink.text;
+    subMenuEl.appendChild(subAnchor);
+  }
+}
+
 topMenuEl.addEventListener('click', function handleClick(clickEvent) {
   clickEvent.preventDefault();
   //  if clicked element is a link 
@@ -104,28 +118,31 @@ topMenuEl.addEventListener('click', function handleClick(clickEvent) {
   }
 });
 
-// clear submenu links
-function buildSubmenu(subLinks) {
-  subMenuEl.innerHTML = '';
-  for (let subLink of subLinks) {
-    let subAnchor = document.createElement('a');
-    subAnchor.setAttribute('href', subLink.href);
-    subAnchor.textContent = subLink.text;
-    subMenuEl.appendChild(subAnchor);
-  }
+subMenuEl.addEventListener('click', function handleClicks (clickEventSub) {
+  clickEventSub.preventDefault();
+  //  if clicked element is a link 
+  if (clickEventSub.target.tagName !== 'A')
+    return;
+  console.log(clickEventSub.target.textContent);
+
+  subMenuEl.style.top = '0';
+  for (const topLink of topMenuLinks) {
+      topLink.classList.remove('active');
+    }
+    mainEl.innerHTML = `<h1>${clickEventSub.target.textContent}</h1>`;
 }
+);
 
 
 
 
 
-topMenuEl.addEventListener('click', handleClick);
 
 
-console.log(topMenuEl)
+// console.log(topMenuEl)
 
-console.log(topMenuLinks)
+// console.log(topMenuLinks)
 
-console.log(mainEl)
-console.log(menuLinks)
+// console.log(mainEl)
+// console.log(menuLinks)
 
